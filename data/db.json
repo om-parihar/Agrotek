@@ -1,8 +1,51 @@
 {
-  "users": [],
+  "users": [
+    {
+      "id": "usr_mmvlb9in_2ss2is4q",
+      "name": "123",
+      "email": "1232112312@gmail.com",
+      "passwordHash": "$2b$10$T9pGdJb4q1RWEfhSFr.4we2x7DXoBGLgEok.Dd9f60qjrKEy5KE46",
+      "role": "farmer",
+      "language": "en",
+      "notificationPrefs": {
+        "inApp": true,
+        "email": false,
+        "sms": false
+      },
+      "createdAt": "2026-03-18T05:17:50.447Z"
+    },
+    {
+      "id": "usr_mmvlk6bv_o96tuqxy",
+      "name": "Om",
+      "email": "talkshow372@gmail.com",
+      "passwordHash": "$2b$10$IKcqzakF8u/zojc0bVpAT.omKkAwocdehVqVvK3EZCILRTKiNdIJm",
+      "role": "farmer",
+      "language": "en",
+      "notificationPrefs": {
+        "inApp": true,
+        "email": false,
+        "sms": false
+      },
+      "createdAt": "2026-03-18T05:24:46.219Z"
+    }
+  ],
   "notifications": [],
   "marketplace": {
-    "listings": [],
+    "listings": [
+      {
+        "id": "lst_mmvlbwid_t407g6mj",
+        "sellerId": "usr_mmvlb9in_2ss2is4q",
+        "title": "12ewsdfdfsdfd",
+        "crop": "fsdfsadsfg",
+        "location": "adsfd",
+        "price": 12413,
+        "unit": "kg",
+        "quantity": 1,
+        "description": "fdbsdfbafv",
+        "status": "active",
+        "createdAt": "2026-03-18T05:18:20.245Z"
+      }
+    ],
     "interests": []
   }
 }

@@ -183,6 +183,7 @@ const AgroTechApp = (() => {
         <a role="menuitem" href="dashboard.html" data-i18n="nav_dashboard">${t('nav_dashboard')}</a>
         <div class="more-sep"></div>
         <a role="menuitem" href="login.html" id="authMenuLink" data-i18n="nav_login">${t('nav_login')}</a>
+        <a role="menuitem" href="firebase-register.html" id="registerMenuLink">Register</a>
         <div class="more-sep"></div>
         <div class="more-lang">
           <label class="more-label">Language</label>
