@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - Agrotek</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a class="logo" href="index.html" aria-label="Agrotek home">
+                    <img class="brand-logo" src="assets/agrotek-logo.svg" alt="Agrotek logo" />
+                    <span class="brand-name">Agrotek</span>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="solutions.html">Solutions</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="chatbot.html">AI Assistant</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1 data-i18n="nav_marketplace">Marketplace</h1>
+            <p>Farmers list crops, buyers discover fresh produce, and everyone gets fair pricing with simple interest requests.</p>
+        </div>
+    </section>
+
+    <section class="resources-section">
+        <div class="container">
+            <div style="display:flex; gap: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                <div style="display:flex; gap: 10px; flex: 1; min-width: 260px;">
+                    <input id="searchBox" class="chat-input" style="height:auto;" placeholder="Search crop, location, title…" />
+                    <button id="searchBtn" class="btn btn-primary">Search</button>
+                </div>
+                <a class="btn btn-secondary" href="dashboard.html">Dashboard</a>
+            </div>
+
+            <div id="createListingCard" class="article-card" style="display:none; margin-bottom: 18px;">
+                <div class="article-content">
+                    <h3>Create listing</h3>
+                    <form id="createListingForm" style="margin-top: 10px;">
+                        <div class="form-group"><label>Title</label><input id="lstTitle" type="text" required /></div>
+                        <div class="form-group"><label>Crop</label><input id="lstCrop" type="text" required /></div>
+                        <div class="form-group"><label>Location</label><input id="lstLocation" type="text" required /></div>
+                        <div class="form-group"><label>Price</label><input id="lstPrice" type="number" min="1" required /></div>
+                        <div class="form-group"><label>Unit</label><input id="lstUnit" type="text" value="kg" required /></div>
+                        <div class="form-group"><label>Quantity</label><input id="lstQty" type="number" min="1" required /></div>
+                        <div class="form-group"><label>Description</label><textarea id="lstDesc" rows="3"></textarea></div>
+                        <button class="btn btn-primary" type="submit">Publish</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="listings" class="articles-grid"></div>
+            <p id="noListings" style="display:none; color: var(--light-text); margin-top: 16px;">No listings found.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 Agrotek. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="app.js"></script>
+    <script src="marketplace.js"></script>
+</body>
+</html>
+

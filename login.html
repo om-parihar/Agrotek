@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Agrotek</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a class="logo" href="index.html" aria-label="Agrotek home">
+                    <img class="brand-logo" src="assets/agrotek-logo.svg" alt="Agrotek logo" />
+                    <span class="brand-name">Agrotek</span>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="solutions.html">Solutions</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="chatbot.html">AI Assistant</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1 data-i18n="nav_login">Login</h1>
+            <p>Login to buy crops, sell produce, and receive updates from the marketplace.</p>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-form">
+                    <h2>Login</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input id="email" type="email" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input id="password" type="password" minlength="6" required />
+                        </div>
+                        <button class="btn btn-primary" type="submit">Login</button>
+                    </form>
+
+                    <hr style="margin: 24px 0; border: none; border-top: 1px solid rgba(0,0,0,0.08);" />
+
+                    <h2>Create account</h2>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input id="name" type="text" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="regEmail">Email</label>
+                            <input id="regEmail" type="email" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="regPassword">Password</label>
+                            <input id="regPassword" type="password" minlength="6" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select id="role" required>
+                                <option value="farmer">Farmer</option>
+                                <option value="buyer">Buyer</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Register</button>
+                    </form>
+                </div>
+
+                <div class="contact-info">
+                    <h2>Tips</h2>
+                    <div class="info-item">
+                        <div class="info-icon">🧑‍🌾</div>
+                        <div>
+                            <h3>Farmer</h3>
+                            <p>Create listings and get buyer interest notifications.</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">🛒</div>
+                        <div>
+                            <h3>Buyer</h3>
+                            <p>Browse listings and contact sellers via “interest”.</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">🌐</div>
+                        <div>
+                            <h3>Language</h3>
+                            <p>Use the language selector in the navbar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 Agrotek. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="app.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>
+

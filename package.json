@@ -1,0 +1,17 @@
+{
+  "name": "agrotech",
+  "version": "1.0.0",
+  "description": "A modern, responsive website for Agrotek, a company dedicated to innovative farming technologies that empower farmers with smart solutions for sustainable agriculture.",
+  "main": "chatbot.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
