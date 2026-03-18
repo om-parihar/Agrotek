@@ -123,5 +123,5 @@ Replace placeholder emojis with actual images by:
 
 ## License
 
-© 2024 AgroTech. All rights reserved.
+© 2026 AgroTech. All rights reserved.
 
