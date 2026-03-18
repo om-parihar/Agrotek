@@ -1,5 +1,7 @@
 # Agrotek - Smart Agriculture Technologies Website
 
+Link-https://agrotek-solutions.netlify.app/
+
 A modern, responsive website for Agrotek, a company dedicated to innovative farming technologies that empower farmers with smart solutions for sustainable agriculture.
 
 ## Features
