@@ -80,9 +80,41 @@ Agrotek/
 
 ## Getting Started
 
-1. Open `index.html` in a web browser
-2. Navigate through the pages using the navigation menu
-3. All pages are fully functional and responsive
+### Static-only mode
+
+If you only want the marketing pages, you can open `index.html` directly.
+
+### Full app mode (required for Login / Google Sign-in / Marketplace / Notifications)
+
+This project includes a Node/Express backend (`server.js`) that serves `/api/*` routes. Static hosting (like GitHub Pages) will return **404** for `/api/*` unless you deploy the backend separately.
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Run the server:
+
+```bash
+node server.js
+```
+
+3. Open the site from the backend origin:
+
+- `http://localhost:3000/login.html`
+
+### Deploying to GitHub Pages + external backend
+
+1. Deploy the backend somewhere (Render/Railway/VPS) so it has a public URL like:
+- `https://your-backend.example.com`
+
+2. Configure the frontend API base URL:
+
+- Add `?apiBase=https://your-backend.example.com` once (it will be saved in `localStorage`)
+
+Example:
+- `https://YOURNAME.github.io/YOURREPO/login.html?apiBase=https://your-backend.example.com`
 
 ## Browser Support
 

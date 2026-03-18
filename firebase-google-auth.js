@@ -9,14 +9,15 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("googleLoginBtn");
-  if (!btn) return;
-  const label = btn.querySelector(".btn-google-label");
+  const googleButtons = Array.from(document.querySelectorAll("[data-google-login]"));
+  if (!googleButtons.length) return;
 
-  btn.addEventListener("click", async (e) => {
+  async function handleGoogleLoginClick(clickedButton, e) {
     e.preventDefault();
     e.stopPropagation();
-    btn.disabled = true;
+
+    const label = clickedButton.querySelector(".btn-google-label");
+    for (const btn of googleButtons) btn.disabled = true;
     if (label) label.textContent = "Signing in…";
 
     try {
@@ -31,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       AgroTechApp.setSession(data);
-
       window.location.href = "dashboard.html";
     } catch (err) {
       console.error("Google login error:", err);
@@ -46,9 +46,16 @@ document.addEventListener("DOMContentLoaded", () => {
       // - auth/operation-not-allowed: Google provider not enabled in Firebase Auth > Sign-in method
       alert(`Google login failed (${[code, status].filter(Boolean).join(", ")}). Please try again.`);
     } finally {
-      btn.disabled = false;
-      if (label) label.textContent = "Continue with Google";
+      for (const btn of googleButtons) btn.disabled = false;
+      for (const btn of googleButtons) {
+        const btnLabel = btn.querySelector(".btn-google-label");
+        if (btnLabel) btnLabel.textContent = "Continue with Google";
+      }
     }
-  });
+  }
+
+  for (const btn of googleButtons) {
+    btn.addEventListener("click", (e) => handleGoogleLoginClick(btn, e));
+  }
 });
 

@@ -4,6 +4,33 @@ const AgroTechApp = (() => {
   const STORAGE_TOKEN = 'agrotech_token';
   const STORAGE_USER = 'agrotech_user';
   const STORAGE_LANG = 'agrotech_lang';
+  const STORAGE_API_BASE = 'agrotech_api_base';
+
+  function normalizeApiBase(v) {
+    const s = String(v || '').trim();
+    if (!s) return '';
+    return s.endsWith('/') ? s.slice(0, -1) : s;
+  }
+
+  function getApiBase() {
+    // Priority: query param (one-off) -> localStorage (persist) -> window override
+    // Note: window override is useful when embedding config via hosting provider.
+    const qsBase = new URLSearchParams(window.location.search).get('apiBase');
+    if (qsBase) {
+      const normalized = normalizeApiBase(qsBase);
+      localStorage.setItem(STORAGE_API_BASE, normalized);
+      return normalized;
+    }
+    const stored = localStorage.getItem(STORAGE_API_BASE);
+    if (stored) return normalizeApiBase(stored);
+    return normalizeApiBase(window.AGROTEK_API_BASE);
+  }
+
+  function setApiBase(nextBase) {
+    const normalized = normalizeApiBase(nextBase);
+    if (!normalized) localStorage.removeItem(STORAGE_API_BASE);
+    else localStorage.setItem(STORAGE_API_BASE, normalized);
+  }
 
   const SUPPORTED_LANGS = [
     { code: 'en', label: 'English' },
@@ -98,10 +125,25 @@ const AgroTechApp = (() => {
   }
 
   async function api(path, { method = 'GET', body = null } = {}) {
+    const apiBase = getApiBase();
+    const isApiRoute = typeof path === 'string' && path.startsWith('/api/');
+    const url = isApiRoute && apiBase ? `${apiBase}${path}` : path;
+
+    // GitHub Pages (static) needs an external backend configured.
+    if (isApiRoute && !apiBase && /\.github\.io$/i.test(window.location.hostname)) {
+      const err = new Error('backend_not_configured');
+      err.status = 0;
+      err.data = {
+        error: 'backend_not_configured',
+        message: 'Set an API base URL (apiBase) to your deployed backend.'
+      };
+      throw err;
+    }
+
     const headers = { 'Content-Type': 'application/json' };
     const token = getToken();
     if (token) headers.Authorization = `Bearer ${token}`;
-    const res = await fetch(path, {
+    const res = await fetch(url, {
       method,
       headers,
       body: body ? JSON.stringify(body) : null
@@ -277,6 +319,8 @@ const AgroTechApp = (() => {
   return {
     t,
     api,
+    getApiBase,
+    setApiBase,
     getLang,
     setLang,
     getToken,
