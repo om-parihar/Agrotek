@@ -11,40 +11,43 @@ const provider = new GoogleAuthProvider();
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("googleLoginBtn");
   if (!btn) return;
+  const label = btn.querySelector(".btn-google-label");
 
   btn.addEventListener("click", async (e) => {
     e.preventDefault();
+    e.stopPropagation();
     btn.disabled = true;
-    btn.textContent = "Signing in…";
+    if (label) label.textContent = "Signing in…";
 
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+      const idToken = await user.getIdToken();
 
-      // For now, just store a lightweight user object in localStorage.
-      // You can later connect this to your backend JWT flow if needed.
-      const profile = {
-        id: user.uid,
-        name: user.displayName || "Google user",
-        email: user.email,
-        // Default role: buyer; adjust logic if you want role selection.
-        role: "buyer",
-        language: AgroTechApp.getLang()
-      };
-
-      AgroTechApp.setSession({
-        // Using Firebase access token here so the session behaves like existing token-based logic.
-        token: user.accessToken || "firebase_google_token",
-        user: profile
+      // Exchange Firebase ID token for this app's JWT (so /api/me works)
+      const data = await AgroTechApp.api("/api/auth/google", {
+        method: "POST",
+        body: { idToken }
       });
+
+      AgroTechApp.setSession(data);
 
       window.location.href = "dashboard.html";
     } catch (err) {
       console.error("Google login error:", err);
-      alert("Google login failed. Please try again.");
+      const code =
+        err?.data?.error ||
+        err?.code ||
+        err?.message ||
+        (typeof err === "string" ? err : "unknown_error");
+      const status = err?.status != null ? `HTTP ${err.status}` : null;
+      // Common root causes:
+      // - auth/unauthorized-domain: site domain not added in Firebase Auth > Settings > Authorized domains
+      // - auth/operation-not-allowed: Google provider not enabled in Firebase Auth > Sign-in method
+      alert(`Google login failed (${[code, status].filter(Boolean).join(", ")}). Please try again.`);
     } finally {
       btn.disabled = false;
-      btn.textContent = "Continue with Google";
+      if (label) label.textContent = "Continue with Google";
     }
   });
 });

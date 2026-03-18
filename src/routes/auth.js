@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const { readDb, writeDb, nextId } = require('../db');
 const { signToken } = require('../auth');
+const { verifyFirebaseIdToken } = require('../firebase-id-token');
 
 const authRouter = express.Router();
 
@@ -61,6 +62,51 @@ authRouter.post('/login', async (req, res) => {
 
   const ok = await bcrypt.compare(password, user.passwordHash);
   if (!ok) return res.status(401).json({ error: 'invalid_credentials' });
+
+  const token = signToken(user);
+  return res.json({
+    token,
+    user: { id: user.id, name: user.name, email: user.email, role: user.role, language: user.language }
+  });
+});
+
+authRouter.post('/google', async (req, res) => {
+  const idToken = String(req.body?.idToken || '');
+  const projectId = process.env.FIREBASE_PROJECT_ID || 'agrotek-c6c96';
+
+  let claims;
+  try {
+    claims = await verifyFirebaseIdToken(idToken, { projectId });
+  } catch (e) {
+    console.warn('Google token verify failed:', e?.code, e?.detail || e?.message);
+    return res.status(401).json({ error: e?.code || 'unauthorized' });
+  }
+
+  const email = normalizeEmail(claims?.email);
+  const name = String(claims?.name || claims?.email || 'Google user').trim();
+  if (!email) return res.status(400).json({ error: 'missing_email' });
+
+  const db = readDb();
+  let user = db.users.find((u) => u.email === email);
+
+  if (!user) {
+    user = {
+      id: nextId('usr'),
+      name,
+      email,
+      passwordHash: null,
+      role: 'buyer',
+      language: 'en',
+      notificationPrefs: { inApp: true, email: false, sms: false },
+      createdAt: new Date().toISOString(),
+      googleSub: claims?.sub || null
+    };
+    db.users.push(user);
+    writeDb(db);
+  } else if (!user.googleSub && claims?.sub) {
+    user.googleSub = claims.sub;
+    writeDb(db);
+  }
 
   const token = signToken(user);
   return res.json({
